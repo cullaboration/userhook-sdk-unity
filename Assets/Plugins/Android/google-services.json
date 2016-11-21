@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "275484538388",
+    "firebase_url": "https://user-hook-demo-unity.firebaseio.com",
+    "project_id": "user-hook-demo-unity",
+    "storage_bucket": "user-hook-demo-unity.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275484538388:android:f23569b50ea3e911",
+        "android_client_info": {
+          "package_name": "com.cullaboration.UserHookDemoUnity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275484538388-aptmkq220rvic84uurf2pqacad80k0hh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGtTD7b2Ak-mMQcz2THtKDJarO9ZFVp7c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
