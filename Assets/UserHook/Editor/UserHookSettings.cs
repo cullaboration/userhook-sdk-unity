@@ -167,7 +167,7 @@ public class UserHookSettings
 
 				return true;
 			} else {
-				EditorUtility.DisplayDialog ("User Hook Error", "Missing google-services.json in Assets/Plugins/Android directory.", "Close");
+				EditorUtility.DisplayDialog ("User Hook Error", "Missing google-services.json in Assets/Plugins/Android directory. This is required for android push messages. If you are not using push messages, you may disregard this message.", "Close");
 				return false;
 			}
 
