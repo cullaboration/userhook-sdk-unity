@@ -9,7 +9,7 @@ public class CustomPayloadHandler : IUserHookPayloadHandler
 		}
 
 	public void handlePayload(Dictionary<string, string> payload) {
-
+		
 		// do custom logic on the payload
 		foreach (string key in payload.Keys) {
 			Debug.Log("payload entry ==> " + key +" = " + payload[key]);

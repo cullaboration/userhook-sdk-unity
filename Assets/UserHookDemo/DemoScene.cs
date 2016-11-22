@@ -24,9 +24,7 @@ public class DemoScene : MonoBehaviour {
 		UserHook.Instance.setNewFeedbackHandler(new CustomNewFeedbackHandler());
 
 		// setup push notifications
-		#if UNITY_IOS
 		UserHook.Instance.registerForPushNotifications();
-		#endif
 
 		// set custom push notification icon for android only
 		// image file must be placed in the Assets/Plugings/Android/custom-push-icon/res/drawable folder

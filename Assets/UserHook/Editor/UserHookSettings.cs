@@ -143,7 +143,12 @@ public class UserHookSettings
 				}
 
 				// create values file
+				string resourcesPathDir = Path.Combine (Directory.GetCurrentDirectory (), "Assets/Plugins/Android/google-services/res/values");
+				if (!Directory.Exists(resourcesPathDir)) {
+					Directory.CreateDirectory(resourcesPathDir);
+				}
 				string resourcesPath = Path.Combine (Directory.GetCurrentDirectory (), "Assets/Plugins/Android/google-services/res/values/values.xml");
+
 
 				string xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 				xml += "<resources>\n";

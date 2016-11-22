@@ -1,11 +1,8 @@
 ﻿using System;
 
-
 public class CustomNewFeedbackHandler : IUserHookNewFeedbackHandler
 {
-	public CustomNewFeedbackHandler ()
-	{
-	}
+	public CustomNewFeedbackHandler () {}
 
 	public void handleResponse ()
 	{

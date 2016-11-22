@@ -66,8 +66,6 @@ public class UserHookConfig
 			Directory.CreateDirectory (resourcesDir);
 		}
 
-		Debug.Log ("writing appId: " + appId + " appKey: " + appKey);
-
 		JSONClass json = new JSONClass ();
 		json.Add ("appId", new JSONData (appId));
 		json.Add ("appKey", new JSONData (appKey));

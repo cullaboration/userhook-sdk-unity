@@ -82,6 +82,10 @@ extern "C" {
         
         [UserHook setPayloadHandler:^(NSDictionary *payload) {
             
+            if (!payload) {
+            	payload = [NSDictionary new];
+            }
+            
             NSError *error;
             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:payload
                                                                options:0

@@ -48,11 +48,7 @@ public class UserHook : MonoBehaviour
 	protected void Init ()
 	{
 		
-		Debug.Log ("init user hook");
-
 		UserHookConfig config = UserHookConfig.Instance;
-
-		Debug.Log ("User Hook: app = " + config.appId + ", key = " + config.appKey);
 
 		#if UNITY_EDITOR
 		nativeInstance = new UserHookNativeDummy ();
@@ -240,6 +236,7 @@ public class UserHook : MonoBehaviour
 	public void registerForPushNotifications ()
 	{
 
+		// only iOS needs to specifically register for push, Android does this automatically
 		#if UNITY_IOS
 
 		UnityEngine.iOS.NotificationServices.RegisterForNotifications (
