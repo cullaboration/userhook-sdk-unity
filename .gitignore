@@ -28,3 +28,9 @@ sysinfo.txt
 
 # Builds
 *.apk
+
+# config files that are specific to each app
+/Assets/Resources/userhook.txt
+/Assets/Plugins/Android/google-services/res/values/values.xml
+/Assets/Plugins/Android/userhook-*/AndroidManifest.xml
+/Assets/Plugins/Android/google-services.json
