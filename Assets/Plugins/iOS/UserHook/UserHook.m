@@ -14,6 +14,7 @@
 #import "UHApplication.h"
 #import "UHMessageView.h"
 #import "UHMessageMeta.h"
+#import "UHNavigationController.h"
 
 @interface UserHook()
 
@@ -84,6 +85,14 @@ static UserHook * _sharedInstance;
 
 +(void) setPayloadHandler:(UHPayloadHandler)payloadHandler {
     [UserHook sharedInstance].payloadHandler = payloadHandler;
+}
+
++(UIViewController *) topViewController {
+    
+    UIViewController * rootController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    while (rootController.presentedViewController) rootController = rootController.presentedViewController;
+    
+    return rootController;
 }
 
 #pragma mark - feedback settings
@@ -418,13 +427,11 @@ static UserHook * _sharedInstance;
             navClass = NSClassFromString([UserHook sharedInstance].navControllerClassName);
         }
         else {
-            navClass = [UINavigationController class];
+            navClass = [UHNavigationController class];
         }
         
         UINavigationController * navController = [[navClass alloc] initWithRootViewController:controller];
-        
-        UIViewController * rootController = [UIApplication sharedApplication].keyWindow.rootViewController;
-        
+        UIViewController * rootController = [UserHook topViewController];
         [rootController presentViewController:navController animated:YES completion:nil];
         
     });
@@ -455,12 +462,13 @@ static UserHook * _sharedInstance;
         
         UHMessageView * view = [UHMessageView createViewForMeta:meta];
         
-        UIViewController * rootController = [UIApplication sharedApplication].keyWindow.rootViewController;
-        view.frame = rootController.view.frame;
-        [rootController.view addSubview:view];
-        
-        [view showDialog];
-        
+        if ([UHMessageView canDisplay]) {
+            UIViewController * rootController = [UserHook topViewController];
+            view.frame = rootController.view.frame;
+            [rootController.view addSubview:view];
+            
+            [view showDialog];
+        }
         
     });
     
@@ -480,7 +488,7 @@ static UserHook * _sharedInstance;
         
         UHHostedPageViewController * controller = [self createHostedPageViewController:slug];
         controller.title = title;
-
+        
         [self displayUHController:controller];
         
     });

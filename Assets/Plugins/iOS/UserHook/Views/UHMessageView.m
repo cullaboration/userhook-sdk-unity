@@ -28,6 +28,8 @@
 
 @implementation UHMessageView
 
+static BOOL displaying = false;
+
 -(id) init {
     self = [super init];
     
@@ -49,6 +51,10 @@
     [_overlay addGestureRecognizer:tap];
     
     return self;
+}
+
++(BOOL) canDisplay {
+    return !displaying;
 }
 
 +(UHMessageView *) createViewForMeta:(UHMessageMeta *) meta {
@@ -83,6 +89,8 @@
 
 
 -(void)awakeFromNib {
+    
+    [super awakeFromNib];
     _overlay.alpha = 0;
     _contentView.alpha = 0;
     
@@ -118,7 +126,7 @@
         [self createWebView];
         NSString * htmlContent = [[UHMessageTemplate sharedInstance] renderTemplate:self.meta];
         
-        [(UIWebView *)self.contentView loadHTMLString:htmlContent baseURL:[NSURL URLWithString:UH_HOST_URL]];
+        [(UHWebView *)self.contentView loadHTMLString:htmlContent baseURL:[NSURL URLWithString:UH_HOST_URL]];
 
         self.contentLoaded = YES;
         
@@ -229,11 +237,10 @@
     
     
     // create webview for message content
-    UIWebView * webView = [[UHWebView alloc] init];
-    webView.delegate = self;
-    webView.backgroundColor = [UIColor clearColor];
-    webView.opaque = NO;
-    
+    UHWebView * webView = [[UHWebView alloc] init];
+    [webView setWebViewDelegate:self];
+    [webView setScrollable:NO];
+    [webView setBackgroundTransparent];
     self.contentView = webView;
     
     self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -246,8 +253,6 @@
     [self addConstraint:self.contentHeight];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    
-    webView.scrollView.scrollEnabled = NO;
     
     _contentView.alpha = 0;
     
@@ -291,6 +296,12 @@
 
 -(void)showDialog {
     
+    if (![UHMessageView canDisplay]) {
+        return;
+    }
+    
+    displaying = YES;
+    
     if (self.contentLoaded) {
         
         _overlay.alpha = 0;
@@ -321,6 +332,7 @@
 
 -(void)hideDialog {
     
+    displaying = NO;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:0.5 animations:^{
@@ -397,6 +409,8 @@
 
 -(void) clickedButton:(UHMessageMetaButton *) button {
     
+    [self hideDialog];
+    
     if (button.clickHandler) {
         button.clickHandler();
     }
@@ -415,12 +429,15 @@
     else if ([button.click isEqualToString:UHMessageClickAction]) {
         [self handleAction:button];
     }
+    else if ([button.click isEqualToString:UHMessageClickClose]) {
+        // don't track close as an interaction
+        return;
+    }
     
     if (self.hookpoint) {
         [UserHook trackHookPointInteraction:self.hookpoint];
     }
     
-    [self hideDialog];
 }
 
 

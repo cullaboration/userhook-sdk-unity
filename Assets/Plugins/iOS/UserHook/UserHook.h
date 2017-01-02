@@ -16,7 +16,7 @@
 #import "UHOperation.h"
 #import "UHHandlers.h"
 
-#define UH_SDK_VERSION @"1.2.1"
+#define UH_SDK_VERSION @"1.3.1"
 #define UH_API_VERSION @"1"
 #define UH_API_URL @"https://api.userhook.com/"
 #define UH_HOST_URL @"https://formhost.userhook.com/"
@@ -58,6 +58,8 @@
 
 +(void) setPayloadHandler:(UHPayloadHandler) payloadHandler;
 
+// find the view controller that is currently displaying on the screen
++(UIViewController *) topViewController;
 
 #pragma mark - feedback settings
 // the title to use for the feedback screen (ie. "Feedback" or "Support")

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.userhook"
+    android:versionCode="1"
+    android:versionName="1.2.2" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="22" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+
+        <!-- User Hook -->
+        <activity
+            android:name="com.userhook.view.UHHostedPageActivity"
+            android:theme="@style/UserHook" />
+
+        <!-- User Hook Push Setup -->
+        <service android:name="com.userhook.push.UHFirebaseInstanceIdService" >
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="com.userhook.push.UHFirebaseMessagingService" >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- this values will be replaced during the unity compilation -->
+        <meta-data
+            android:name="userhook_app_id"
+            android:value="{userhookAppId}" />
+        <meta-data
+            android:name="userhook_app_key"
+            android:value="{userhookAppKey}" />
+    </application>
+
+</manifest>
